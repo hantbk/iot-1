@@ -14,5 +14,5 @@ pip install -r requirements.txt
 ## Run Server
 ```bash
 cd server
-flask run
+uvicorn main:app --reload 
 ```
