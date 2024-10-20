@@ -2,20 +2,28 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models import DeviceModel, Device, DeviceUpdate
 from database import engine, get_db, Base
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Thay thế "" bằng các nguồn gốc cụ thể nếu cần
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
 # Create a new device
-@app.post("/devices/", response_model=Device)
+@app.post("/devices", response_model=Device)
 def create_device(device: Device, db: Session = Depends(get_db)):
     # Check if device with the same ID already exists
     db_device = (
@@ -33,7 +41,7 @@ def create_device(device: Device, db: Session = Depends(get_db)):
 
 
 # Get all devices
-@app.get("/devices/", response_model=list[Device])
+@app.get("/devices", response_model=list[Device])
 def read_all_devices(db: Session = Depends(get_db)):
     return db.query(DeviceModel).all()
 
