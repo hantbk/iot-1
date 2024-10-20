@@ -2,9 +2,6 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models import DeviceModel, Device, DeviceUpdate
 from database import engine, get_db, Base
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
