@@ -34,13 +34,13 @@ def create_device(device: Device, db: Session = Depends(get_db)):
 
 # Get all devices
 @app.get("/devices/", response_model=list[Device])
-def read_devices(db: Session = Depends(get_db)):
+def read_all_devices(db: Session = Depends(get_db)):
     return db.query(DeviceModel).all()
 
 
 # Get a device by ID
 @app.get("/devices/{device_id}", response_model=Device)
-def read_device(device_id: str, db: Session = Depends(get_db)):
+def read_device_by_id(device_id: str, db: Session = Depends(get_db)):
     db_device = db.query(DeviceModel).filter(DeviceModel.deviceId == device_id).first()
     if db_device is None:
         raise HTTPException(status_code=404, detail="Device not found")
@@ -49,14 +49,20 @@ def read_device(device_id: str, db: Session = Depends(get_db)):
 
 # Update a device by ID
 @app.put("/devices/{device_id}", response_model=Device)
-def update_device(device_id: str, device_update: DeviceUpdate, db: Session = Depends(get_db)):
+def update_device(
+    device_id: str, device_update: DeviceUpdate, db: Session = Depends(get_db)
+):
     try:
         # Fetch the existing device from the database
-        db_device = db.query(DeviceModel).filter(DeviceModel.deviceId == device_id).first()
+        db_device = (
+            db.query(DeviceModel).filter(DeviceModel.deviceId == device_id).first()
+        )
 
         # Raise a 404 error if the device does not exist
         if db_device is None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Device not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Device not found"
+            )
 
         # Update the device fields with the new values
         update_data = device_update.dict(exclude_unset=True)
@@ -71,7 +77,9 @@ def update_device(device_id: str, device_update: DeviceUpdate, db: Session = Dep
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
         logger.error(traceback.format_exc())
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
 
 
 # Delete a device
@@ -84,3 +92,4 @@ def delete_device(device_id: str, db: Session = Depends(get_db)):
     db.delete(db_device)
     db.commit()
     return {"detail": "Device deleted"}
+
