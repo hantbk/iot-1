@@ -2,6 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models import DeviceModel, Device, DeviceUpdate
 from database import engine, get_db, Base
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Create all database tables
 Base.metadata.create_all(bind=engine)
@@ -92,4 +95,3 @@ def delete_device(device_id: str, db: Session = Depends(get_db)):
     db.delete(db_device)
     db.commit()
     return {"detail": "Device deleted"}
-
