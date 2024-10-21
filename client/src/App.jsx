@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table,notification } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import "./App.css";
 import { getAllDevices } from './api';
@@ -111,9 +111,9 @@ const App = () => {
 
   const handleRowClick = (record) => {
     console.log(record)
-    setSelected(record); // Lưu thiết bị đã chọn
+    setSelected(record);
     console.log("abc",selected);
-    setIsClickUpdate(!isClickUpdate); // Mở popup
+    setIsClickUpdate(!isClickUpdate);
   };
 
   const fetchData = async () => {
@@ -146,7 +146,7 @@ const App = () => {
       <div className='App'>
         <Button type="primary" className='button' onClick={() => setIsClick(true)} tac = "Thêm">Thêm thiết bị</Button>
         <Table columns={columns} dataSource={data} onRow={(record) => ({
-            onClick: () => handleRowClick(record), // Thêm onClick vào từng dòng
+            onClick: () => handleRowClick(record),
           })}/>
       </div>
     </>

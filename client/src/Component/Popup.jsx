@@ -1,7 +1,6 @@
-// Component/Popup.js
-import './Popup.css'; // Thêm file CSS cho Popup
+import './Popup.css'; 
 import React, { useState } from 'react';
-import { Button, Form, Input, Radio, Space } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { createDevices } from '../api';
 
 const Popup = ({ onClose }) => {
@@ -11,8 +10,6 @@ const Popup = ({ onClose }) => {
       setFormLayout(layout);
     };
 
-    
-
     const [formData, setFormData] = useState({
         deviceId: "",
         qrCodeId: "",
@@ -21,7 +18,7 @@ const Popup = ({ onClose }) => {
 
     const handleCreateForm = async() =>{
         try {
-          const res = await createDevices(formData);
+          await createDevices(formData);
           onClose()
           alert("Thêm thiết bị thành công")
         } catch (error) {

@@ -1,8 +1,7 @@
-// Component/Popup.js
-import './Popup.css'; // Thêm file CSS cho Popup
+import './Popup.css'; 
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Radio, Space } from 'antd';
-import { createDevices, DeleteDevice, getDevicesById, UpdateDevice } from '../api';
+import { Button, Form, Input, Space } from 'antd';
+import { DeleteDevice, getDevicesById, UpdateDevice } from '../api';
 
 const PopupUpdate = ({ onCloseUpdate,device }) => {
     const [form] = Form.useForm();
@@ -34,7 +33,7 @@ const PopupUpdate = ({ onCloseUpdate,device }) => {
 
     const handleUpdate= async() =>{
         try {
-          const res = await UpdateDevice(formData.deviceId,formData);
+          await UpdateDevice(formData.deviceId,formData);
           onCloseUpdate()
           alert("Cập nhật thiết bị thành công")
         } catch (error) {
@@ -45,7 +44,7 @@ const PopupUpdate = ({ onCloseUpdate,device }) => {
 
     const handleDelete= async() =>{
         try {
-          const res = await DeleteDevice(formData.deviceId,formData);
+          await DeleteDevice(formData.deviceId,formData);
           onCloseUpdate()
           alert("Xoá thiết bị thành công")
         } catch (error) {
@@ -56,6 +55,7 @@ const PopupUpdate = ({ onCloseUpdate,device }) => {
 
     useEffect(() =>{
         getDeviceById()
+        // eslint-disable-next-line
     }, [])
 
     console.log(device.deviceId)
