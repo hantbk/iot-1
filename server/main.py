@@ -4,7 +4,6 @@ from models import DeviceModel, Device, DeviceUpdate
 from database import engine, get_db, Base
 from fastapi.middleware.cors import CORSMiddleware
 
-
 # Create all database tables
 Base.metadata.create_all(bind=engine)
 
@@ -12,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Thay thế "" bằng các nguồn gốc cụ thể nếu cần
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
