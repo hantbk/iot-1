@@ -1,4 +1,4 @@
-# iot exercise
+# IoT exercise HTTP Rest API
 
 ## Setup ENV
 ```bash
