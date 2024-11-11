@@ -2,10 +2,10 @@ services:
 - type: web
   name: iot
   runtime: python
-  repo: https://github.com/hantbk/iot
+  repo: https://github.com/hantbk/mqtt
   plan: free
   region: oregon
   buildCommand: pip install -r requirements.txt
   startCommand: uvicorn main:app --host 0.0.0.0
-  rootDir: server
+  rootDir: http-rest-api/server
 version: "1"
